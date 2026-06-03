@@ -1,5 +1,0 @@
-#!/bin/sh
-
-[ -z ${CAI_CODE_CHECKER_PROFILE_FILE} ] && echo "CAI_CODE_CHECKER_PROFILE_FILE is not defined" && exit 1
-[ ! -f ${CAI_CODE_CHECKER_PROFILE_FILE} ] && echo "CAI_CODE_CHECKER_PROFILE_FILE not found: ${CAI_CODE_CHECKER_PROFILE_FILE}" && exit 2
-HOME=/pre-commit pre-commit run --config "${CAI_CODE_CHECKER_PROFILE_FILE}" --all-files --show-diff-on-failure
