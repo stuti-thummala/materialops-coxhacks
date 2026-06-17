@@ -1,0 +1,364 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #222831;
+  --bg-soft: #2a313c;
+  --panel: rgba(13, 32, 51, 0.82);
+  --panel-strong: rgba(17, 43, 67, 0.92);
+  --border: rgba(120, 214, 255, 0.14);
+  --border-strong: rgba(93, 241, 184, 0.28);
+
+  /* ops palette (light) — space-separated RGB channels for Tailwind alpha */
+  --ops-bg: 244 241 234;
+  --ops-surface: 255 253 247;
+  --ops-ink: 24 32 38;
+  --ops-muted: 109 116 124;
+  --ops-border: 216 210 198;
+  --ops-navy: 13 37 51;
+  --ops-green: 17 94 62;
+  --ops-green-dark: 17 94 62;
+  --ops-amber: 201 131 26;
+  --ops-red: 195 74 54;
+  --ops-blue: 47 111 219;
+  --ops-purple: 114 81 181;
+
+  --text: #f4fbff;
+  --muted: #94a8bd;
+  --muted-2: #6f839a;
+
+  --cyan: #22d3ee;
+  --blue: #2563eb;
+  --emerald: #10b981;
+  --lime: #84cc16;
+  --green: #22c55e;
+
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  --success-gradient: linear-gradient(135deg, #16a34a 0%, #84cc16 100%);
+  --bluegreen-gradient: linear-gradient(135deg, #0f6bff 0%, #04b7a6 45%, #22c55e 100%);
+  --panel-gradient: linear-gradient(145deg, rgba(14, 43, 70, 0.96), rgba(5, 24, 42, 0.96));
+}
+
+/* Dark theme — overrides the ops palette for any subtree it wraps */
+.theme-dark {
+  --ops-bg: 15 23 31;
+  --ops-surface: 26 35 45;
+  --ops-ink: 237 242 247;
+  --ops-muted: 148 163 184;
+  --ops-border: 45 58 71;
+  --ops-navy: 6 14 22;
+  --ops-green: 31 157 102;
+  --ops-green-dark: 16 122 86;
+  --ops-amber: 233 179 76;
+  --ops-red: 248 113 113;
+  --ops-blue: 96 165 250;
+  --ops-purple: 167 139 250;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-plex), var(--font-inter), system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-display {
+  font-family: var(--font-grotesk), var(--font-inter), system-ui, sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(120, 214, 255, 0.14);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(120, 214, 255, 0.28);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.5s ease both;
+}
+
+@keyframes pingSoft {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  70%,
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.map-ping {
+  animation: pingSoft 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.35s ease both;
+}
+
+.surface-panel {
+  background: #2d333e;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.surface-panel-2 {
+  background: #363d49;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* When the savings statement modal is open, print IT (all-black) instead of the pass. */
+  body:has(.savings-statement) .print-area {
+    display: none !important;
+  }
+  .savings-statement,
+  .savings-statement * {
+    visibility: visible;
+    color: #000 !important;
+    background: transparent !important;
+    border-color: #000 !important;
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .savings-statement {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+  .savings-statement .stmt-header {
+    background: #fff !important;
+    border-bottom: 2px solid #000 !important;
+    border-radius: 0 !important;
+  }
+  .savings-statement .stmt-track {
+    border: 1px solid #000 !important;
+    background: #fff !important;
+  }
+  .savings-statement .stmt-bar {
+    background: #000 !important;
+  }
+
+  /* Exported reports print all-black on white. */
+  body:has(.report-doc) .print-area {
+    display: none !important;
+  }
+  .report-doc,
+  .report-doc * {
+    visibility: visible;
+    color: #000 !important;
+    background: transparent !important;
+    border-color: #000 !important;
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .report-doc {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+}
+
+/* ===== Command Center (3D Mapbox command view) ===== */
+.cmd-scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(52, 211, 153, 0.04) 0px,
+    rgba(52, 211, 153, 0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+}
+
+@keyframes cmd-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+.cmd-blink {
+  animation: cmd-blink 1.4s ease-in-out infinite;
+}
+
+/* floating batch marker bob for the walk-through scene */
+@keyframes batch-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.batch-float {
+  animation: batch-float 3.2s ease-in-out infinite;
+}
+
+/* scrollable side panels */
+.cmd-panel-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(52, 211, 153, 0.4) transparent;
+}
+.cmd-panel-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+.cmd-panel-scroll::-webkit-scrollbar-thumb {
+  background: rgba(52, 211, 153, 0.35);
+  border-radius: 3px;
+}
+.cmd-panel-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* zone markers */
+.cmd-zone-marker {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.cmd-zone-dot {
+  position: relative;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  /* bright radar-blip core ringed by a soft colored halo */
+  background:
+    radial-gradient(circle at 50% 50%, #fff 0%, #fff 22%, var(--c) 60%, var(--c) 100%);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--c) 35%, transparent),
+    0 0 12px 3px color-mix(in srgb, var(--c) 80%, transparent),
+    0 0 26px 8px color-mix(in srgb, var(--c) 40%, transparent);
+  flex: none;
+}
+.cmd-zone-pulse {
+  position: absolute;
+  left: 0;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1.5px solid var(--c);
+  box-shadow: 0 0 8px 1px color-mix(in srgb, var(--c) 60%, transparent);
+  animation: cmd-pulse 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+@keyframes cmd-pulse {
+  0% { transform: scale(1); opacity: 0.85; }
+  100% { transform: scale(5); opacity: 0; }
+}
+.cmd-zone-label {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  font-family: var(--font-plex), ui-monospace, monospace;
+  /* subtle glass pill so labels stay legible over busy imagery */
+  padding: 3px 8px;
+  border-radius: 7px;
+  background: rgba(8, 14, 20, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+}
+.cmd-zone-label b {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.cmd-zone-label i {
+  font-size: 9px;
+  font-style: normal;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+/* flowing material particles (zone → recovery hub) */
+.cmd-flow-particle {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow:
+    0 0 8px 2px var(--c),
+    0 0 14px 4px color-mix(in srgb, var(--c) 55%, transparent);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* dampen default mapbox dark canvas edges */
+.mapboxgl-canvas:focus {
+  outline: none;
+}
