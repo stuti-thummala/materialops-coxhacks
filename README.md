@@ -85,8 +85,4 @@ training script.
 224×224) and exports a `.tflite` model into the Flutter assets folder. Requires
 TensorFlow (`pip install tensorflow`).
 
-## Notes
 
-- The web app uses mock data in `src/lib/mockData.ts`; there is no backend.
-- Agents and the assistant are deterministic prototypes designed to be replaced
-  by live services later.
